@@ -6213,6 +6213,18 @@ Sigma_Exit:
 			printf_P(_msg_mode_done_remain, _N("NORMAL"), int(print_percent_done_normal), print_time_remaining_normal);
 			printf_P(_msg_mode_done_remain, _N("SILENT"), int(print_percent_done_silent), print_time_remaining_silent);
 		}
+
+		//If print_percent_done_normal is at 0% start print
+		if(print_percent_done_normal == 0) {
+			total_filament_used = 0;
+			starttime = _millis();
+		}
+
+		//If print_percent_done_normal is at 100% save filament used and print time
+		if(print_percent_done_normal == 100) {
+			stoptime = _millis();
+			save_statistics(total_filament_used, (stoptime - starttime) / 1000); //time in s
+		}
 		break;
 
     /*!

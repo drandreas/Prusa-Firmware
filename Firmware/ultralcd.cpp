@@ -2847,7 +2847,7 @@ static void lcd_LoadFilament()
 void lcd_menu_statistics()
 {
     lcd_timeoutToStatus.stop(); //infinite timeout
-	if (IS_SD_PRINTING)
+	if (IS_SD_PRINTING || is_usb_printing)
 	{
 		const float _met = ((float)total_filament_used) / (100000.f);
 		const uint32_t _t = (_millis() - starttime) / 1000ul;
@@ -6977,7 +6977,7 @@ static void lcd_main_menu()
 
   }
   
-  if (!is_usb_printing && (lcd_commands_type != LcdCommands::Layer1Cal))
+  if (lcd_commands_type != LcdCommands::Layer1Cal)
   {
 	  MENU_ITEM_SUBMENU_P(_i("Statistics  "), lcd_menu_statistics);////MSG_STATISTICS
   }
